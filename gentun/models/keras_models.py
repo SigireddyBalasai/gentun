@@ -3,7 +3,7 @@
 Machine Learning models compatible with the Genetic Algorithm implemented using Keras
 """
 
-import keras.backend as K
+import tensorflow.compat.v1.keras.backend as K
 import numpy as np
 
 from keras.layers import Input, Conv2D, Activation, Add, MaxPooling2D, Flatten, Dense, Dropout
@@ -121,8 +121,11 @@ class GeneticCnnModel(GentunModel):
         """Initialize model weights."""
         session = K.get_session()
         for layer in self.model.layers:
-            if hasattr(layer, 'kernel_initializer'):
-                layer.kernel.initializer.run(session=session)
+            print("Resetting weights of layer {}".format(layer.name))
+            if hasattr(layer, 'bias_initializer') and layer.bias.initializer is not None:
+                layer.bias.initializer.run(session=session)
+            if hasattr(layer, 'kernel_initializer') and layer.kernel.initializer is not None: 
+                layer.kernel.initializer.run(session=session)  
 
     def cross_validate(self):
         """Train model using k-fold cross validation and

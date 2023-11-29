@@ -17,11 +17,12 @@ class Population(object):
 
     def __init__(self, species, x_train, y_train, individual_list=None, size=None,
                  crossover_rate=0.5, mutation_rate=0.015, maximize=True,
-                 additional_parameters=None):
+                 additional_parameters=None,validation=None):
         self.x_train = x_train
         self.y_train = y_train
         self.species = species
         self.maximize = maximize
+        self.validation = validation
         if individual_list is None and size is None:
             raise ValueError("Either pass a list of individuals or a population size for a random population.")
         elif individual_list is None:
