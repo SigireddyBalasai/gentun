@@ -15,7 +15,7 @@ except ImportError:
     pass
 
 try:
-    from gentun.models.keras_models import GeneticCnnModel
+    from models.keras_models import GeneticCnnModel
 except ImportError:
     pass
 
