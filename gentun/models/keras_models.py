@@ -103,7 +103,7 @@ class GeneticCnnModel(GentunModel):
                         tmp = Add()(add_vars)
                     else:
                         tmp = add_vars[0]
-                tmp = Conv2D(kernels, kernel_size=(3, 3,3), strides=(1, 1,1), padding='same')(tmp)
+                tmp = Conv2D(kernels, kernel_size=(3, 3), strides=(1, 1), padding='same')(tmp)
                 tmp = Activation('relu')(tmp)
                 all_vars[i] = tmp
                 if not outs:
@@ -118,7 +118,7 @@ class GeneticCnnModel(GentunModel):
         x = x_input
         for layer, kernels in enumerate(kernels_per_layer):
             # Default input node
-            x = Conv2D(kernels, kernel_size=kernel_sizes[layer], strides=(1, 1,1), padding='same')(x)
+            x = Conv2D(kernels, kernel_size=kernel_sizes[layer], strides=(1, 1), padding='same')(x)
             x = Activation('relu')(x)
             # Decode internal connections
             connections = genes['S_{}'.format(layer + 1)]
@@ -126,7 +126,7 @@ class GeneticCnnModel(GentunModel):
             if not all([not bool(int(connection)) for connection in connections]):
                 x = self.build_dag(x, nodes[layer], connections, kernels)
                 # Output node
-                x = Conv2D(kernels, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(x)
+                x = Conv2D(kernels, kernel_size=(3, 3), strides=(1, 1), padding='same')(x)
                 x = Activation('relu')(x)
             x = MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(x)
         x = Flatten()(x)
