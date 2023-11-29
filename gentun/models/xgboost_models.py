@@ -5,7 +5,7 @@ Machine Learning models compatible with the Genetic Algorithm implemented using 
 
 import xgboost as xgb
 
-from .generic_models import GentunModel
+from gentun.models.generic_models import GentunModel
 
 
 class XgboostModel(GentunModel):

@@ -10,12 +10,12 @@ import pprint
 import random
 
 try:
-    from .models.xgboost_models import XgboostModel
+    from gentun.models.xgboost_models import XgboostModel
 except ImportError:
     pass
 
 try:
-    from .models.keras_models import GeneticCnnModel
+    from gentun.models.keras_models import GeneticCnnModel
 except ImportError:
     pass
 

@@ -11,7 +11,7 @@ from keras.optimizers import Adam
 from keras.models import Model
 from sklearn.model_selection import StratifiedKFold
 
-from .generic_models import GentunModel
+from gentun.models.generic_models import GentunModel
 
 K.set_image_data_format('channels_last')
 

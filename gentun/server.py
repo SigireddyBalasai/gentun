@@ -11,7 +11,7 @@ import threading
 import time
 import uuid
 
-from .populations import Population, GridPopulation
+from gentun.populations import Population, GridPopulation
 
 
 class RpcClient(object):
