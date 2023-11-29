@@ -6,7 +6,7 @@ Machine Learning models compatible with the Genetic Algorithm implemented using 
 import tensorflow.compat.v1.keras.backend as K
 import numpy as np
 
-from keras.layers import Input, Conv2D, Activation, Add, MaxPooling2D, Flatten, Dense, Dropout
+from keras.layers import Input, Conv3D, Activation, Add, MaxPooling3D, Flatten, Dense, Dropout
 from keras.optimizers import Adam
 from keras.models import Model
 from sklearn.model_selection import StratifiedKFold
@@ -103,7 +103,7 @@ class GeneticCnnModel(GentunModel):
                         tmp = Add()(add_vars)
                     else:
                         tmp = add_vars[0]
-                tmp = Conv2D(kernels, kernel_size=(3, 3), strides=(1, 1), padding='same')(tmp)
+                tmp = Conv3D(kernels, kernel_size=(3, 3,3), strides=(1, 1,1), padding='same')(tmp)
                 tmp = Activation('relu')(tmp)
                 all_vars[i] = tmp
                 if not outs:
@@ -118,7 +118,7 @@ class GeneticCnnModel(GentunModel):
         x = x_input
         for layer, kernels in enumerate(kernels_per_layer):
             # Default input node
-            x = Conv2D(kernels, kernel_size=kernel_sizes[layer], strides=(1, 1), padding='same')(x)
+            x = Conv3D(kernels, kernel_size=kernel_sizes[layer], strides=(1, 1,1), padding='same')(x)
             x = Activation('relu')(x)
             # Decode internal connections
             connections = genes['S_{}'.format(layer + 1)]
@@ -126,9 +126,9 @@ class GeneticCnnModel(GentunModel):
             if not all([not bool(int(connection)) for connection in connections]):
                 x = self.build_dag(x, nodes[layer], connections, kernels)
                 # Output node
-                x = Conv2D(kernels, kernel_size=(3, 3), strides=(1, 1), padding='same')(x)
+                x = Conv3D(kernels, kernel_size=(3, 3, 3), strides=(1, 1, 1), padding='same')(x)
                 x = Activation('relu')(x)
-            x = MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(x)
+            x = MaxPooling3D(pool_size=(2, 2), strides=(2, 2))(x)
         x = Flatten()(x)
         x = Dense(dense_units, activation='relu')(x)
         x = Dropout(dropout_probability)(x)

@@ -72,6 +72,7 @@ class RussianRouletteGA(GeneticAlgorithm):
         fittest = self.population.get_fittest()
         print("Fittest individual is:")
         print(fittest)
+        
         print("Fitness value is: {}\n".format(round(fittest.get_fitness(), 4)))
         # Russian roulette selection
         if self.population.get_fitness_criteria():
